@@ -1,6 +1,6 @@
-use qrcode::render::unicode;
-use qrcode::QrCode;
 use std::io;
+mod qrcode;
+
 fn main() {
     println!("Enter the text to generate QR code:");
 
@@ -17,14 +17,7 @@ fn main() {
         .expect("Failed to read confirmation line");
 
     if confirmation.trim().to_lowercase() == "y" {
-        let code = QrCode::new(input.trim()).unwrap();
-        let image = code
-            .render::<unicode::Dense1x2>()
-            .dark_color(unicode::Dense1x2::Light)
-            .light_color(unicode::Dense1x2::Dark)
-            .build();
-
-        println!("{}", image);
+     qrcode::generate_qrcode(input);
     } else {
         println!("QR code generation canceled.");
     }
